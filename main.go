@@ -25,4 +25,8 @@ func main() {
 		// }
 	}
 
+	for _, doneChan := range doneChans {
+		<- doneChan
+	}
+
 }
