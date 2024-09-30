@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"time"
 )
 
 type FileManager struct {
@@ -45,6 +46,8 @@ func (fm FileManager) WriteResult( data interface{}) error {
 		return errors.New("Failed to create a file.")
 	}
 
+
+	time.Sleep(3*time.Second)
 	encoder := json.NewEncoder(file)
 	err = encoder.Encode(data)
 
