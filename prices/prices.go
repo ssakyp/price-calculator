@@ -33,10 +33,10 @@ func (job *TaxIncludedPriceJob) LoadData() error {
 	return nil
 }
 
-func (job *TaxIncludedPriceJob) Process() error {
+func (job *TaxIncludedPriceJob) Process(doneChan chan bool) error {
 	err := job.LoadData()
 		if err != nil {
-			return err
+			// return err
 		}
 
 
@@ -48,7 +48,9 @@ func (job *TaxIncludedPriceJob) Process() error {
 	}
 
 	job.TaxIncludedPrices = result
-	return job.IOManager.WriteResult(job)
+	// return value for goroutine is ingnored
+	job.IOManager.WriteResult(job)
+	doneChan <- true
 }
 
 func NewTaxIncludedPriceJob(iom iomanager.IOManager, taxRate float64) *TaxIncludedPriceJob {
